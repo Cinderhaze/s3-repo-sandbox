@@ -1,7 +1,8 @@
 # setup s3-yum-plugin
 #repo - https://github.com/jbraeuer/yum-s3-plugin
 
-$iam = true
+$iam = false
+#$iam = true
 
 case $iam {
   true: {
@@ -63,15 +64,25 @@ if $iam {
   file { '/usr/lib/yum-plugins/s3iam.py':
     ensure => absent,
   }
+  file { '/usr/lib/yum-plugins/s3.py':
+    ensure => present,
+    source => "${repo_path}/s3.py",
+    require => Vcsrepo[$repo_path],
+  }
   #place config
   file { '/etc/yum/pluginconf.d/s3iam.conf':
     ensure => absent,
+  }
+  file { '/etc/yum/pluginconf.d/s3.conf':
+    ensure => present,
+    source => "${repo_path}/s3.conf",
+    require => Vcsrepo[$repo_path],
   }
   #create yumrepo
   yumrepo { 's3-plugin':
     baseurl        => 'http://dawiest-repo.s3.amazonaws.com/noarch',
     ensure         => 'present',
-    descr          => 'S3 iam - Testing - $basearch - Source',
+    descr          => 'S3 plugin - Testing - $basearch - Source',
     enabled        => '1',
     gpgcheck       => '0',
     s3_enabled     => true,
