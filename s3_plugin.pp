@@ -47,6 +47,17 @@ if $iam {
   }
   
   #create yumrepo
+  yumrepo { 's3-iam':
+    baseurl        => 'http://dawiest-repo.s3.amazonaws.com/noarch',
+    ensure         => 'present',
+    descr          => 'S3 iam - Testing - $basearch - Source',
+    enabled        => '1',
+    gpgcheck       => '0',
+    s3_enabled     => true,
+  }
+  yumrepo { 's3-plugin':
+    ensure => 'absent',
+  }
 } else {
   #place py file
   file { '/usr/lib/yum-plugins/s3iam.py':
@@ -57,4 +68,15 @@ if $iam {
     ensure => absent,
   }
   #create yumrepo
+  yumrepo { 's3-plugin':
+    baseurl        => 'http://dawiest-repo.s3.amazonaws.com/noarch',
+    ensure         => 'present',
+    descr          => 'S3 iam - Testing - $basearch - Source',
+    enabled        => '1',
+    gpgcheck       => '0',
+    s3_enabled     => true,
+  }
+  yumrepo { 's3-iam':
+    ensure => 'absent',
+  }
 }
