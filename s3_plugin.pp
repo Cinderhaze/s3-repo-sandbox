@@ -1,17 +1,19 @@
 # setup s3-yum-plugin
 #repo - https://github.com/jbraeuer/yum-s3-plugin
 
-$iam = false
-#$iam = true
+#$iam = false
+$iam = true
 
 case $iam {
   true: {
     $repo_path = '/git/yum-s3-iam'
     $repo = 'https://github.com/seporaitis/yum-s3-iam/' 
+    $revision = 'v4_signature'
   }
   default: {
     $repo_path = '/git/yum-s3-plugin'
     $repo = 'https://github.com/jbraeuer/yum-s3-plugin'
+    $revision = 'master'
   }
 } 
 
@@ -22,7 +24,7 @@ vcsrepo{ $repo_path:
   ensure => 'present',
   provider => 'git',
   source => $repo,
-  revision => 'master',
+  revision => $revision,
   require => File['/git'],
 } 
 #sing us a lullabye at night... lullabye at night - that's what the kids in the cigna comercial say
