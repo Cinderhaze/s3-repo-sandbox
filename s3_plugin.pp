@@ -51,7 +51,8 @@ if $iam {
   
   #create yumrepo
   yumrepo { 's3-iam':
-    baseurl        => 'http://dawiest-repo.s3.amazonaws.com/noarch',
+    #baseurl        => 'https://dawiest-repo.s3.amazonaws.com/noarch',
+    baseurl        => 'https://dawiest-repo.s3-eu-central-1.amazonaws.com/noarch',
     ensure         => 'present',
     descr          => 'S3 iam - Testing - $basearch - Source',
     enabled        => '1',

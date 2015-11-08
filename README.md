@@ -15,3 +15,8 @@ http://boto.readthedocs.org/en/latest/s3_tut.html - offical boto docs
 
 https://github.com/yegor256/s3auth/issues/214 -- Discussion about how to add sig4 to an s3auth project
 
+
+
+To do everything, run this (evil) curlbash
+
+curl https://raw.githubusercontent.com/Cinderhaze/s3-repo-sandbox/master/init.sh | bash
